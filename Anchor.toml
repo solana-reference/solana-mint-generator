@@ -1,0 +1,15 @@
+[provider]
+cluster = "localnet"
+wallet = "./tests/test-keypairs/test-key.json"
+
+[programs.mainnet]
+mint_generator = "mintjBhypUqvbKvCePPsQN55AYBY3DwFWpuR5PDURdH"
+
+[programs.devnet]
+mint_generator = "mintjBhypUqvbKvCePPsQN55AYBY3DwFWpuR5PDURdH"
+
+[programs.testnet]
+mint_generator = "mintjBhypUqvbKvCePPsQN55AYBY3DwFWpuR5PDURdH"
+
+[programs.localnet]
+mint_generator = "mintjBhypUqvbKvCePPsQN55AYBY3DwFWpuR5PDURdH"

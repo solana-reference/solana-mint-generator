@@ -1,0 +1,84 @@
+
+Table accounts.mint_config {
+  ref publicKey [pk]
+  bump u8
+  authority publicKey
+  name string
+  supply u64
+  count u64
+  output_mint_config Object
+  mint_phases MintPhase[]
+  metadata string
+}
+
+Table accounts.mint_phase_authorization {
+  ref publicKey [pk]
+  bump u8
+  mint_config publicKey
+  mint_phase_index u8
+  user publicKey
+  count u64
+}
+
+Table mint_config.output_mint_config {
+  ref string
+  seller_fee_basis_points u16
+  token_standard Object
+  collection Opt(publicKey)
+  ruleset Opt(publicKey)
+  creators Creator[]
+  merkle_tree Opt(publicKey)
+}
+
+Table mint_config.creator {
+  ref string
+  address publicKey
+  share u8
+}
+
+Table mint_config.mint_phase {
+  ref string
+  start_condition Opt([object Object])
+  end_condition Opt([object Object])
+  token_checks MintPhaseTokenCheck[]
+  authorization Opt([object Object])
+  metadata string
+}
+
+Table mint_config.mint_phase_start_end_condition {
+  ref string
+  time_seconds Opt(i64)
+  count Opt(u64)
+}
+
+Table mint_config.mint_phase_token_check {
+  ref string
+  address_kind Object
+  address publicKey
+  amount u64
+  transfer_target Opt(publicKey)
+  mode Object
+}
+
+Table mint_config.mint_phase_authorization_check {
+  ref string
+  max_count Opt(u64)
+  mode Object
+}
+
+Table mint_config.mint_entry {
+  ref string
+  name string
+  symbol string
+  uri string
+}
+
+Ref: accounts.mint_phase_authorization.mint_config < accounts.mint_config.ref
+Ref: accounts.mint_config.ref < mint_config.mint_entry.ref
+Ref: accounts.mint_config.output_mint_config < mint_config.output_mint_config.ref
+Ref: accounts.mint_config.mint_phases < mint_config.mint_phase.ref
+Ref: mint_config.output_mint_config.creators < mint_config.creator.ref
+Ref: mint_config.mint_phase.start_condition < mint_config.mint_phase_start_end_condition.ref
+Ref: mint_config.mint_phase.end_condition < mint_config.mint_phase_start_end_condition.ref
+Ref: mint_config.mint_phase.token_checks < mint_config.mint_phase_token_check.ref
+Ref: mint_config.mint_phase.authorization < mint_config.mint_phase_authorization_check.ref
